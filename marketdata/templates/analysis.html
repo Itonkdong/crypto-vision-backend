@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>{{ symbol }} Analysis</title>
+  <style>
+    body {
+      background: #020617;
+      color: #e2e8f0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      padding: 24px;
+    }
+    h1 { font-size: 28px; margin-bottom: 16px; }
+    h2 { margin-top: 24px; margin-bottom: 8px; }
+    img {
+      max-width: 100%;
+      border-radius: 12px;
+      border: 1px solid rgba(148,163,184,0.4);
+      background: #020617;
+    }
+    .corr-table {
+      margin-top: 24px;
+      border-collapse: collapse;
+    }
+    .corr-table th,
+    .corr-table td {
+      border: 1px solid rgba(148,163,184,0.4);
+      padding: 6px 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>{{ symbol }} – On-chain &amp; Sentiment Analysis</h1>
+
+  <h2>Price vs Sentiment</h2>
+  <img src="{{ price_sentiment_chart }}" alt="{{ symbol }} price vs sentiment" />
+
+  {% if addresses_chart %}
+    <h2>BTC Active Addresses</h2>
+    <img src="{{ addresses_chart }}" alt="BTC active addresses" />
+  {% endif %}
+
+  {% if correlations %}
+    <h2>Correlation with next-day returns</h2>
+    <table class="corr-table">
+      <tr>
+        <th>Feature</th>
+        <th>Correlation with return_1d</th>
+      </tr>
+      {% for k, v in correlations.items %}
+      <tr>
+        <td>{{ k }}</td>
+        <td>{{ v|floatformat:3 }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  {% endif %}
+</body>
+</html>
